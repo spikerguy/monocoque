@@ -115,28 +115,35 @@ int showstats(SimData* simdata)
 
             int alt = simdata->altitude;
             int digits = 0;
-            while (alt > 0)
+            if (alt > 0)
             {
-                int mod = alt % 10;
-                alt = alt / 10;
-                digits++;
+                while (alt > 0)
+                {
+                    int mod = alt % 10;
+                    alt = alt / 10;
+                    digits++;
+                }
+                alt = simdata->altitude;
+                int s[digits];
+                int digit = 0;
+                while (alt > 0)
+                {
+                    int mod = alt % 10;
+                    s[digit] = mod;
+                    alt = alt / 10;
+                    digit++;
+                }
+                alt = simdata->altitude;
+                digit = digits;
+                while (digit > 0)
+                {
+                    fputc(s[digit-1]+'0', stdout);
+                    digit--;
+                }
             }
-            alt = simdata->altitude;
-            int s[digits];
-            int digit = 0;
-            while (alt > 0)
+            else
             {
-                int mod = alt % 10;
-                s[digit] = mod;
-                alt = alt / 10;
-                digit++;
-            }
-            alt = simdata->altitude;
-            digit = digits;
-            while (digit > 0)
-            {
-                fputc(s[digit-1]+'0', stdout);
-                digit--;
+                fputc('0', stdout);
             }
             fputc(' ', stdout);
         }
